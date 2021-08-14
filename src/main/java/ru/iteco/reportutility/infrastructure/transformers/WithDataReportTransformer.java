@@ -9,6 +9,7 @@ import ru.iteco.reportutility.models.Report;
  *
  * @author Ilya_Sukhachev
  */
+//конкретный декоратор
 public class WithDataReportTransformer extends ReportServiceTransformerBase {
 
     public WithDataReportTransformer(DataTransformer dataTransformer) {

@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * ReportServiceBase.
@@ -23,8 +25,8 @@ public abstract class ReportServiceBase implements ReportService {
         this.args = args;
     }
 
-    //todo паттерн шаблонный метод, createReport() - и есть шаблонный метод, getDataRows(String text) - реализуется по
-    // разному в наследниках FileFormatReportService
+    //паттерн шаблонный метод, createReport() - и есть шаблонный метод, getDataRows(String text) - реализуется по
+    // разному в наследниках FileFormatReportService, легко с стратегией перепутать
     @Override
     public Report createReport() {
         var config = parseConfig();
@@ -35,7 +37,8 @@ public abstract class ReportServiceBase implements ReportService {
         try {
             text = Files.readString(Paths.get(fileName));
         } catch (IOException e) {
-            System.out.println(e);
+
+            e.printStackTrace();
         }
 
         var data = getDataRows(text);
@@ -44,12 +47,20 @@ public abstract class ReportServiceBase implements ReportService {
 
     protected abstract DataRow[] getDataRows(String text);
 
-    // по идее можно команду использовать
+    // по идее можно команду использовать, я реализовал строителя
     private ReportConfig parseConfig() {
-        return new ReportConfig(Arrays.asList(args).contains("-withData"), Arrays.asList(args).contains("-withIndex"),
-                Arrays.asList(args).contains("-withTotalVolume"), Arrays.asList(args).contains("-withTotalWeight"),
-                Arrays.asList(args).contains("-volumeSum"), Arrays.asList(args).contains("-weightSum"),
-                Arrays.asList(args).contains("-costSum"), Arrays.asList(args).contains("-countSum"));
+        var argsSet = new HashSet<>(List.of(args));
+
+        return ReportConfig.builder()
+                .setIsWithData(argsSet.contains("-withData"))
+                .setCostSum(argsSet.contains("-costSum"))
+                .setWithIndex(argsSet.contains("-withIndex"))
+                .setWithTotalVolume(argsSet.contains("-withTotalVolume"))
+                .setWithTotalWeight(argsSet.contains("-withTotalWeight"))
+                .setCountSum(argsSet.contains("-countSum"))
+                .setWeightSum(argsSet.contains("-weightSum"))
+                .setVolumeSum(argsSet.contains("-volumeSum"))
+                .build();
     }
 
 }

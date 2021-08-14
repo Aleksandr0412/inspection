@@ -6,92 +6,140 @@ package ru.iteco.reportutility.models;
  * @author Ilya_Sukhachev
  */
 //очень большое количество полей, нужно использовать строителя
+    //добавлены хотелки, а именно желтый варнинг и если нет никаких параметров бросаем исключение, то есть обязательно хоть один параметр
 public class ReportConfig {
 
-    private boolean withData;
+    private final boolean withData;
 
-    private boolean withIndex;
-    private boolean withTotalVolume;
-    private boolean withTotalWeight;
+    private final boolean withIndex;
+    private final boolean withTotalVolume;
+    private final boolean withTotalWeight;
 
-    private boolean volumeSum;
-    private boolean weightSum;
-    private boolean costSum;
-    private boolean countSum;
+    private final boolean volumeSum;
+    private final boolean weightSum;
+    private final boolean costSum;
+    private final boolean countSum;
 
-    public ReportConfig(boolean withData, boolean withIndex, boolean withTotalVolume, boolean withTotalWeight, boolean volumeSum,
-                        boolean weightSum, boolean costSum, boolean countSum) {
-        this.withData = withData;
-        this.withIndex = withIndex;
-        this.withTotalVolume = withTotalVolume;
-        this.withTotalWeight = withTotalWeight;
-        this.volumeSum = volumeSum;
-        this.weightSum = weightSum;
-        this.costSum = costSum;
-        this.countSum = countSum;
+    public ReportConfig(ReportConfigBuilder builder) {
+        this.withData = builder.withData;
+        this.withIndex = builder.withIndex;
+        this.withTotalVolume = builder.withTotalVolume;
+        this.withTotalWeight = builder.withTotalWeight;
+        this.volumeSum = builder.volumeSum;
+        this.weightSum = builder.weightSum;
+        this.costSum = builder.costSum;
+        this.countSum = builder.countSum;
+    }
+
+    public static ReportConfigBuilder builder() {
+        return new ReportConfigBuilder();
     }
 
     public boolean isWithData() {
         return withData;
     }
 
-    public void setWithData(boolean withData) {
-        this.withData = withData;
-    }
-
     public boolean isWithIndex() {
         return withIndex;
-    }
-
-    public void setWithIndex(boolean withIndex) {
-        this.withIndex = withIndex;
     }
 
     public boolean isWithTotalVolume() {
         return withTotalVolume;
     }
 
-    public void setWithTotalVolume(boolean withTotalVolume) {
-        this.withTotalVolume = withTotalVolume;
-    }
-
     public boolean isWithTotalWeight() {
         return withTotalWeight;
-    }
-
-    public void setWithTotalWeight(boolean withTotalWeight) {
-        this.withTotalWeight = withTotalWeight;
     }
 
     public boolean isVolumeSum() {
         return volumeSum;
     }
 
-    public void setVolumeSum(boolean volumeSum) {
-        this.volumeSum = volumeSum;
-    }
-
     public boolean isWeightSum() {
         return weightSum;
-    }
-
-    public void setWeightSum(boolean weightSum) {
-        this.weightSum = weightSum;
     }
 
     public boolean isCostSum() {
         return costSum;
     }
 
-    public void setCostSum(boolean costSum) {
-        this.costSum = costSum;
-    }
-
     public boolean isCountSum() {
         return countSum;
     }
 
-    public void setCountSum(boolean countSum) {
-        this.countSum = countSum;
+    public static class ReportConfigBuilder {
+        private boolean isNotEmptyFields;
+        private boolean withData;
+
+        private boolean withIndex;
+        private boolean withTotalVolume;
+        private boolean withTotalWeight;
+
+        private boolean volumeSum;
+        private boolean weightSum;
+        private boolean costSum;
+        private boolean countSum;
+
+        public ReportConfigBuilder setIsWithData(boolean isWithData) {
+            this.withData = isWithData;
+            isNotEmpty(isWithData);
+            return this;
+        }
+
+        public ReportConfigBuilder setWithIndex(boolean withIndex) {
+            this.withIndex = withIndex;
+            isNotEmpty(withIndex);
+            return this;
+        }
+
+        public ReportConfigBuilder setWithTotalVolume(boolean withTotalVolume) {
+            this.withTotalVolume = withTotalVolume;
+            isNotEmpty(withTotalVolume);
+            return this;
+        }
+
+        public ReportConfigBuilder setWithTotalWeight(boolean withTotalWeight) {
+            this.withTotalWeight = withTotalWeight;
+            isNotEmpty(withTotalWeight);
+            return this;
+        }
+
+        public ReportConfigBuilder setVolumeSum(boolean volumeSum) {
+            this.volumeSum = volumeSum;
+            isNotEmpty(volumeSum);
+            return this;
+        }
+
+        public ReportConfigBuilder setWeightSum(boolean weightSum) {
+            this.weightSum = weightSum;
+            isNotEmpty(weightSum);
+            return this;
+        }
+
+        public ReportConfigBuilder setCostSum(boolean costSum) {
+            this.costSum = costSum;
+            isNotEmpty(costSum);
+            return this;
+        }
+
+        public ReportConfigBuilder setCountSum(boolean countSum) {
+            this.countSum = countSum;
+            isNotEmpty(countSum);
+            return this;
+        }
+
+        public ReportConfig build() {
+            if (!isNotEmptyFields) {
+                throw new RuntimeException("нет полей");
+            }
+            if (!this.withData) {
+                System.out.println("\n Yellow warning!\n");
+            }
+            return new ReportConfig(this);
+        }
+        private void isNotEmpty(boolean value){
+            if(value) isNotEmptyFields = true;
+        }
     }
 }
+

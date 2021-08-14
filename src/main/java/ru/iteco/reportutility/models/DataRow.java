@@ -7,6 +7,7 @@ import java.math.BigDecimal;
  *
  * @author Ilya_Sukhachev
  */
+//todo использовать билдер
 public class DataRow {
 
     private BigDecimal cost;

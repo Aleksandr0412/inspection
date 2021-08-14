@@ -21,6 +21,7 @@ public class Main {
 
     // //opt/git/iteco/dp/inspection/src/main/resources/table.txt -withData -weightSum -costSum
     // //opt/git/iteco/dp/inspection/src/main/resources/table.csv -withData -weightSum -costSum
+    // /src/main/resources/table.txt -withData -weightSum
     public static void main(String[] args) {
         ReportService service;
         try {
@@ -35,7 +36,7 @@ public class Main {
             var report = service.createReport();
             printReport(report);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -60,6 +61,7 @@ public class Main {
 
     private static void printReport(Report report) {
         //todo вынести в билдер
+        //todo могут быть нееправельные хедеры
         if (report.getConfig().isWithData() && report.getData() != null && report.getData().length != 0) {
             var headerRow = "Наименование\tОбъём упаковки\tМасса упаковки\tСтоимость\tКоличество";
 
@@ -73,7 +75,7 @@ public class Main {
                 headerRow = headerRow + "\tСуммарный вес";
             }
 
-            //todo sb
+            //Много объектов создавалось, много конкатенаций в цикле, заменил на StringBuilder
             StringBuilder sb = new StringBuilder();
             System.out.println(headerRow);
             for (int i = 0; i < report.getData().length; i++) {
@@ -99,15 +101,8 @@ public class Main {
                         .append(StringUtils.repeat(TAB, 2))
                         .append(dataRow.getWeight().multiply(dataRow.getCount()));
 
-
-//                var str = (i + 1 + TAB + dataRow.getName() + ((i != 0) ? StringUtils.repeat(TAB, 2) : TAB)
-//                        + dataRow.getVolume() + StringUtils.repeat(TAB, 4) + dataRow.getWeight()
-//                        + StringUtils.repeat(TAB, 4) + dataRow.getCost() + StringUtils.repeat(TAB, 3)
-//                        + dataRow.getCount() + StringUtils.repeat(TAB, 3) + dataRow.getVolume().multiply(dataRow.getCount())
-//                        + StringUtils.repeat(TAB, 2) + dataRow.getWeight().multiply(dataRow.getCount()));
                 System.out.println(sb);
                 sb.setLength(0);
-//                System.out.println(str);
             }
 
             System.out.println();

@@ -12,13 +12,11 @@ import ru.iteco.reportutility.models.ReportConfig;
  *
  * @author Ilya_Sukhachev
  */
+//паттерн декоратор, но много ифов, возможно стоит переделать под цепочку обязанностей и на месте проферять флаги
 public class DataTransformerCreator {
 
     public static DataTransformer createTransformer(ReportConfig config) {
-        //todo декоратор
         DataTransformer service = new ConfigDataTransformer(config);
-
-        //todo нужно динамически добавлять парамен=тры и глвые реализации
 
         if (config.isWithData()) {
             service = new WithDataReportTransformer(service);

@@ -33,12 +33,13 @@ public class CsvReportService extends ReportServiceBase {
             parser = new CSVParser(in, CSVFormat.EXCEL);
             list = parser.getRecords();
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         for (CSVRecord csvRecord : list) {
             var items = csvRecord.get(0).split(";");
-            dataRows.add(new DataRow(new BigDecimal(items[3]), new BigDecimal(items[4]), items[0],
+            dataRows.add( //todo использовать билдер
+                    new DataRow(new BigDecimal(items[3]), new BigDecimal(items[4]), items[0],
                     new BigDecimal(items[1]), new BigDecimal(items[2])));
         }
 

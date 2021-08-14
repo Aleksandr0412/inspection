@@ -12,6 +12,7 @@ import java.math.BigDecimal;
  *
  * @author Ilya_Sukhachev
  */
+//конкретный декоратор
 public class CountSumReportTransformer extends ReportServiceTransformerBase {
 
     public CountSumReportTransformer(DataTransformer dataTransformer) {

@@ -25,13 +25,15 @@ public class TxtReportService extends ReportServiceBase {
         for (int i = 1; i < lines.length; i++) {
             var items = lines[i].split("\t");
             List<String> arrayList = new ArrayList<>();
-            for (int j = 0; j < items.length; j++) {
-                if (!items[j].isEmpty()) {
-                    arrayList.add(items[j]);
+            //лучше читается
+            for (String item : items) {
+                if (!item.isEmpty()) {
+                    arrayList.add(item);
                 }
             }
             if (arrayList.size() >= 5) {
-                dataRows.add(new DataRow(new BigDecimal(arrayList.get(3)), new BigDecimal(arrayList.get(4)),
+                dataRows.add(//todo использовать билдер
+                        new DataRow(new BigDecimal(arrayList.get(3)), new BigDecimal(arrayList.get(4)),
                         arrayList.get(0), new BigDecimal(arrayList.get(1)), new BigDecimal(arrayList.get(2))));
             }
         }
