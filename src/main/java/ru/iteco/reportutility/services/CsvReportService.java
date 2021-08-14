@@ -38,9 +38,16 @@ public class CsvReportService extends ReportServiceBase {
 
         for (CSVRecord csvRecord : list) {
             var items = csvRecord.get(0).split(";");
-            dataRows.add( //todo использовать билдер
-                    new DataRow(new BigDecimal(items[3]), new BigDecimal(items[4]), items[0],
-                    new BigDecimal(items[1]), new BigDecimal(items[2])));
+            dataRows.add(
+                     DataRow.builder()
+                            .setCost( new BigDecimal( items[3] ) )
+                            .setCount( new BigDecimal( items[4] ) )
+                            .setName( items[0] )
+                            .setVolume( new BigDecimal( items[1] ) )
+                            .setWeight( new BigDecimal( items[2] ) )
+                            .build( )
+            );
+
         }
 
         var result = new DataRow[dataRows.size()];

@@ -32,9 +32,16 @@ public class TxtReportService extends ReportServiceBase {
                 }
             }
             if (arrayList.size() >= 5) {
-                dataRows.add(//todo использовать билдер
-                        new DataRow(new BigDecimal(arrayList.get(3)), new BigDecimal(arrayList.get(4)),
-                        arrayList.get(0), new BigDecimal(arrayList.get(1)), new BigDecimal(arrayList.get(2))));
+                dataRows.add(
+                         DataRow.builder()
+                                .setCost(new BigDecimal(arrayList.get(3)))
+                                .setCount(new BigDecimal(arrayList.get(4)))
+                                .setName(arrayList.get(0))
+                                .setVolume(new BigDecimal(arrayList.get(1)))
+                                .setWeight(new BigDecimal(arrayList.get(2)))
+                                .build()
+                );
+
             }
         }
         var result = new DataRow[dataRows.size()];

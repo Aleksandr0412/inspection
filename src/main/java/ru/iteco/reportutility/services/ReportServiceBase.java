@@ -8,7 +8,6 @@ import ru.iteco.reportutility.models.ReportConfig;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public abstract class ReportServiceBase implements ReportService {
         try {
             text = Files.readString(Paths.get(fileName));
         } catch (IOException e) {
-
+// так правильней будет ошибку выводить
             e.printStackTrace();
         }
 

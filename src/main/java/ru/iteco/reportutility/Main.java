@@ -40,7 +40,7 @@ public class Main {
         }
     }
 
-    //todo стратегия
+    //очень похоже на выбор стратегии, но по идее мы тут выбираем наследника класса шаблонного метода
     private static ReportService getReportService(String[] args) throws Exception {
         var filename = args[0];
 
@@ -61,7 +61,8 @@ public class Main {
 
     private static void printReport(Report report) {
         //todo вынести в билдер
-        //todo могут быть нееправельные хедеры
+        //todo тут могут быть нееправельные хедеры нужно добавить
+        // по хорошему надо было тоже в билдер вынести
         if (report.getConfig().isWithData() && report.getData() != null && report.getData().length != 0) {
             var headerRow = "Наименование\tОбъём упаковки\tМасса упаковки\tСтоимость\tКоличество";
 
