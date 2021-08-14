@@ -39,6 +39,7 @@ public class Main {
         }
     }
 
+    //todo стратегия
     private static ReportService getReportService(String[] args) throws Exception {
         var filename = args[0];
 
@@ -58,6 +59,7 @@ public class Main {
     }
 
     private static void printReport(Report report) {
+        //todo вынести в билдер
         if (report.getConfig().isWithData() && report.getData() != null && report.getData().length != 0) {
             var headerRow = "Наименование\tОбъём упаковки\tМасса упаковки\tСтоимость\tКоличество";
 
@@ -71,15 +73,41 @@ public class Main {
                 headerRow = headerRow + "\tСуммарный вес";
             }
 
+            //todo sb
+            StringBuilder sb = new StringBuilder();
             System.out.println(headerRow);
             for (int i = 0; i < report.getData().length; i++) {
                 var dataRow = report.getData()[i];
-                var str = (i + 1 + TAB + dataRow.getName() + ((i != 0) ? StringUtils.repeat(TAB, 2) : TAB)
-                        + dataRow.getVolume() + StringUtils.repeat(TAB, 4) + dataRow.getWeight()
-                        + StringUtils.repeat(TAB, 4) + dataRow.getCost() + StringUtils.repeat(TAB, 3)
-                        + dataRow.getCount() + StringUtils.repeat(TAB, 3) + dataRow.getVolume().multiply(dataRow.getCount())
-                        + StringUtils.repeat(TAB, 2) + dataRow.getWeight().multiply(dataRow.getCount()));
-                System.out.println(str);
+                sb
+                        .append(i+1)
+                        .append(TAB)
+                        .append(dataRow.getName())
+                        .append(((i != 0) ? StringUtils.repeat(TAB, 2) : TAB))
+
+                        .append(dataRow.getVolume())
+                        .append(StringUtils.repeat(TAB, 4))
+                        .append(dataRow.getWeight())
+
+                        .append(StringUtils.repeat(TAB, 4) )
+                        .append(dataRow.getCost())
+                        .append(StringUtils.repeat(TAB, 3))
+
+                        .append(dataRow.getCount())
+                        .append(StringUtils.repeat(TAB, 3))
+                        .append(dataRow.getVolume().multiply(dataRow.getCount()))
+
+                        .append(StringUtils.repeat(TAB, 2))
+                        .append(dataRow.getWeight().multiply(dataRow.getCount()));
+
+
+//                var str = (i + 1 + TAB + dataRow.getName() + ((i != 0) ? StringUtils.repeat(TAB, 2) : TAB)
+//                        + dataRow.getVolume() + StringUtils.repeat(TAB, 4) + dataRow.getWeight()
+//                        + StringUtils.repeat(TAB, 4) + dataRow.getCost() + StringUtils.repeat(TAB, 3)
+//                        + dataRow.getCount() + StringUtils.repeat(TAB, 3) + dataRow.getVolume().multiply(dataRow.getCount())
+//                        + StringUtils.repeat(TAB, 2) + dataRow.getWeight().multiply(dataRow.getCount()));
+                System.out.println(sb);
+                sb.setLength(0);
+//                System.out.println(str);
             }
 
             System.out.println();

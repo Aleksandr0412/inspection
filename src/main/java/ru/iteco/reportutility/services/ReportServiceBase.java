@@ -23,6 +23,8 @@ public abstract class ReportServiceBase implements ReportService {
         this.args = args;
     }
 
+    //todo паттерн шаблонный метод, createReport() - и есть шаблонный метод, getDataRows(String text) - реализуется по
+    // разному в наследниках FileFormatReportService
     @Override
     public Report createReport() {
         var config = parseConfig();
@@ -42,6 +44,7 @@ public abstract class ReportServiceBase implements ReportService {
 
     protected abstract DataRow[] getDataRows(String text);
 
+    // по идее можно команду использовать
     private ReportConfig parseConfig() {
         return new ReportConfig(Arrays.asList(args).contains("-withData"), Arrays.asList(args).contains("-withIndex"),
                 Arrays.asList(args).contains("-withTotalVolume"), Arrays.asList(args).contains("-withTotalWeight"),

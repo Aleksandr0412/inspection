@@ -8,6 +8,7 @@ import ru.iteco.reportutility.models.Report;
  *
  * @author Ilya_Sukhachev
  */
+// Компонент декоратора, поведение будет расширяться декораторами
 public interface DataTransformer {
 
     Report transformData(DataRow[] data);

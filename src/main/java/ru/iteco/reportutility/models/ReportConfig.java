@@ -5,6 +5,7 @@ package ru.iteco.reportutility.models;
  *
  * @author Ilya_Sukhachev
  */
+//очень большое количество полей, нужно использовать строителя
 public class ReportConfig {
 
     private boolean withData;

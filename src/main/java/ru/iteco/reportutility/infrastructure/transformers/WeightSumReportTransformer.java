@@ -20,6 +20,7 @@ public class WeightSumReportTransformer extends ReportServiceTransformerBase {
 
     @Override
     public Report transformData(DataRow[] data) {
+        //todo убрать дублирование
         var report = dataTransformer.transformData(data);
 
         var value = new BigDecimal(0);
